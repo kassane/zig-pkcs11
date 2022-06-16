@@ -17,4 +17,4 @@ jobs:
           version: master
 
       - name: Build & Tests
-        run: zig build -Drelease-safe && ls zig-out/bin
+        run: zig build -Drelease-safe && ls zig-out/lib
