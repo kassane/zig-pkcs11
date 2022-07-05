@@ -13,7 +13,6 @@ pub fn build(b: *std.build.Builder) void {
 
     var main_tests = b.addTest("src/lib.zig");
     main_tests.setBuildMode(mode);
-    main_tests.linkSystemLibrary("softhsm2");
     main_tests.linkLibC();
 
     const test_step = b.step("test", "Run library tests");
