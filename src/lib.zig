@@ -1,13 +1,13 @@
 const std = @import("std");
-const types = @import("pkcs11t.zig");
+const pkcs11 = @import("pkcs11.zig");
 const testing = std.testing;
 
-test {
-    _ = @import("pkcs11t.zig");
-    _ = @import("pkcs11f.zig");
-}
-
-test "softHSM" {
+test "softHSM2" {
     const lib = @embedFile("/usr/lib/softhsm/libsofthsm2.so");
     _ = lib;
+}
+
+test "Reference all the declarations" {
+    testing.refAllDecls(pkcs11);
+    testing.refAllDecls(@This());
 }
