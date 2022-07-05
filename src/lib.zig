@@ -6,3 +6,8 @@ test {
     _ = @import("pkcs11t.zig");
     _ = @import("pkcs11f.zig");
 }
+
+test "softHSM" {
+    const lib = @embedFile("/usr/lib/softhsm/libsofthsm2.so");
+    _ = lib;
+}

@@ -7,6 +7,6 @@
 ![GitHub](https://img.shields.io/github/license/kassane/zig-pkcs11?style=flat-square)
 
 
-This is a library which brings support for PKCS#11 v2.40 to Zig, based on project [Rust PKCS#11 Library](https://github.com/mheese/rust-pkcs11), thanks [mheese](https://github.com/mheese).
+This is a library which brings support for PKCS#11 v2.40 to Zig, based on project [Rust PKCS#11 Library](https://github.com/mheese/rust-pkcs11) and [Go PKCS#11 Library](https://github.com/miekg/pkcs11).
 ## Status: WiP
 

@@ -5,6 +5,8 @@ pub const CK_VERSION = extern struct {
     major: CK_BYTE, // integer portion of version number
     minor: CK_BYTE, // 1/100ths portion of version number
 };
+const CK_FUNCTION_LIST = opaque {};
+const CK_FUNCTION_LIST_PTR = ?*CK_FUNCTION_LIST;
 pub const CK_VERSION_PTR = ?*CK_VERSION;
 pub const CK_BBOOL = CK_BYTE;
 pub const CK_ULONG = u32;
