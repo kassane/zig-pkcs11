@@ -17,7 +17,8 @@ jobs:
         run: |
             sudo apt update
             sudo apt install -f libsofthsm2 -y
-            sudo usermod -a -G softhsm $USER
+            sudo usermod -a -G softhsm2 $USER
+            export SOFTHSM_CONF=$USER/softhsm.conf
             softhsm --init-token --slot 0 --label test --pin 1234
 
       - name: build
