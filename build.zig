@@ -7,13 +7,14 @@ pub fn build(b: *std.build.Builder) void {
 
     const lib = b.addStaticLibrary("zig-pkcs11", "src/lib.zig");
     lib.setBuildMode(mode);
-    lib.linkSystemLibrary("libsofthsm2");
+    lib.linkSystemLibrary("softhsm2");
     lib.linkLibC();
     lib.install();
 
     var main_tests = b.addTest("src/lib.zig");
     main_tests.setBuildMode(mode);
-    main_tests.linkSystemLibrary("libsofthsm2");
+    main_tests.linkSystemLibrary("softhsm2");
+    main_tests.linkLibC();
 
     const test_step = b.step("test", "Run library tests");
     test_step.dependOn(&main_tests.step);
