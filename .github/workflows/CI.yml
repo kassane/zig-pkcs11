@@ -18,7 +18,7 @@ jobs:
         run: |
             sudo apt update
             sudo apt install -f libsofthsm2 -y
-            sudo usermod -a -G softhsm2 $USER
+            sudo usermod -a -G softhsm $USER
             mkdir -p $HOME/lib/softhsm/tokens && echo "directories.tokendir = $HOME/lib/softhsm/tokens" > $HOME/lib/softhsm/softhsm2.conf
             sudo chown -R $USER:$USER $HOME/lib/softhsm
             export SOFTHSM2_CONF=$HOME/lib/softhsm/softhsm2.conf
