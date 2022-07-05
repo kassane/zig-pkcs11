@@ -14,12 +14,15 @@ jobs:
       - name: Install SoftHSM 2
         env:
           PKCS11_SOFTHSM2_MODULE: /usr/lib/softhsm/libsofthsm2.so
+          SOFTHSM2_CONF: /etc/softhsm/softhsm2.conf
         run: |
             sudo apt update
             sudo apt install -f libsofthsm2 -y
             sudo usermod -a -G softhsm2 $USER
-            export SOFTHSM_CONF=$USER/softhsm.conf
-            softhsm --init-token --slot 0 --label test --pin 1234
+            mkdir -p $HOME/lib/softhsm/tokens && echo "directories.tokendir = $HOME/lib/softhsm/tokens" > $HOME/lib/softhsm/softhsm2.conf
+            sudo chown -R $USER:$USER $HOME/lib/softhsm
+            export SOFTHSM2_CONF=$HOME/lib/softhsm/softhsm2.conf
+            softhsm2-util --init-token --slot 0 --label "Test" --so-pin "1122334455" --pin "1122334455" --serial `shuf -i 0-9999 -n1`
 
       - name: build
         run: zig build test
