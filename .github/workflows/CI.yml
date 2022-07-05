@@ -12,9 +12,13 @@ jobs:
           version: master
       
       - name: Install SoftHSM 2
+        env:
+          PKCS11_SOFTHSM2_MODULE: /usr/lib/softhsm/libsofthsm2.so
         run: |
             sudo apt update
-            sudo apt install libsofthsm2 -y
+            sudo apt install -f libsofthsm2 -y
+            sudo usermod -a -G softhsm $USER
+            softhsm --init-token --slot 0 --label test --pin 1234
 
       - name: build
         run: zig build test
