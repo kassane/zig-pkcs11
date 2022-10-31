@@ -19,7 +19,7 @@ This is a library which brings support for PKCS#11 v2.40 to Zig.
 
 **Install:**
 
-- [zig v0.10.0 (self-hosting)](https://ziglang/download)
+- [zig v0.10.0 (self-hosting)](https://ziglang.org/download)
 
 
 **Build library:**

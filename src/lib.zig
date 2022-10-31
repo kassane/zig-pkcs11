@@ -6,10 +6,9 @@ const testing = std.testing;
 
 test "Detecting libsoftHSM2" {
     // embedded lib on compilation time
-    _ = @embedFile("/usr/lib/softhsm/libsofthsm2.so");
+    _ = @embedFile("/usr/local/lib/softhsm/libsofthsm2.so");
 }
 
 test "Reference all the declarations" {
-    testing.refAllDecls(pkcs11);
-    testing.refAllDecls(@This());
+    testing.refAllDeclsRecursive(@This());
 }
