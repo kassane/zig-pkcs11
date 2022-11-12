@@ -25,7 +25,9 @@ jobs:
             softhsm2-util --init-token --slot 0 --label "Test" --so-pin "1122334455" --pin "1122334455" --serial `shuf -i 0-9999 -n1`
 
       - name: build
-        run: zig build test
+        run: |
+            cp rbuild_lib/libsofthsm2.* /usr/lib/softhsm
+            zig build test
   lint:
     runs-on: ubuntu-latest
     steps:
