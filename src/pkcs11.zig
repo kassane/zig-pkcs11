@@ -696,50 +696,179 @@ pub const CK_C_Logout = switch (zig_backend) {
     .stage1 => ?fn (CK_SESSION_HANDLE) callconv(.C) CK_RV,
     else => ?*const fn (CK_SESSION_HANDLE) callconv(.C) CK_RV,
 };
-pub const CK_C_CreateObject = ?*const fn (CK_SESSION_HANDLE, CK_ATTRIBUTE_PTR, CK_ULONG, CK_OBJECT_HANDLE_PTR) callconv(.C) CK_RV;
-pub const CK_C_CopyObject = ?*const fn (CK_SESSION_HANDLE, CK_OBJECT_HANDLE, CK_ATTRIBUTE_PTR, CK_ULONG, CK_OBJECT_HANDLE_PTR) callconv(.C) CK_RV;
+pub const CK_C_CreateObject = switch (zig_backend) {
+    .stage1 => ?fn (CK_SESSION_HANDLE, CK_ATTRIBUTE_PTR, CK_ULONG, CK_OBJECT_HANDLE_PTR) callconv(.C) CK_RV,
+    else => ?*const fn (CK_SESSION_HANDLE, CK_ATTRIBUTE_PTR, CK_ULONG, CK_OBJECT_HANDLE_PTR) callconv(.C) CK_RV,
+};
+pub const CK_C_CopyObject = switch (zig_backend) {
+    .stage1 => ?fn (CK_SESSION_HANDLE, CK_OBJECT_HANDLE, CK_ATTRIBUTE_PTR, CK_ULONG, CK_OBJECT_HANDLE_PTR) callconv(.C) CK_RV,
+    else => ?*const fn (CK_SESSION_HANDLE, CK_OBJECT_HANDLE, CK_ATTRIBUTE_PTR, CK_ULONG, CK_OBJECT_HANDLE_PTR) callconv(.C) CK_RV,
+};
 pub const CK_C_DestroyObject = ?*const fn (CK_SESSION_HANDLE, CK_OBJECT_HANDLE) callconv(.C) CK_RV;
-pub const CK_C_GetObjectSize = ?*const fn (CK_SESSION_HANDLE, CK_OBJECT_HANDLE, CK_ULONG_PTR) callconv(.C) CK_RV;
-pub const CK_C_GetAttributeValue = ?*const fn (CK_SESSION_HANDLE, CK_OBJECT_HANDLE, CK_ATTRIBUTE_PTR, CK_ULONG) callconv(.C) CK_RV;
-pub const CK_C_SetAttributeValue = ?*const fn (CK_SESSION_HANDLE, CK_OBJECT_HANDLE, CK_ATTRIBUTE_PTR, CK_ULONG) callconv(.C) CK_RV;
-pub const CK_C_FindObjectsInit = ?*const fn (CK_SESSION_HANDLE, CK_ATTRIBUTE_PTR, CK_ULONG) callconv(.C) CK_RV;
-pub const CK_C_FindObjects = ?*const fn (CK_SESSION_HANDLE, CK_OBJECT_HANDLE_PTR, CK_ULONG, CK_ULONG_PTR) callconv(.C) CK_RV;
-pub const CK_C_FindObjectsFinal = ?*const fn (CK_SESSION_HANDLE) callconv(.C) CK_RV;
-pub const CK_C_EncryptInit = ?*const fn (CK_SESSION_HANDLE, CK_MECHANISM_PTR, CK_OBJECT_HANDLE) callconv(.C) CK_RV;
-pub const CK_C_Encrypt = ?*const fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG, CK_BYTE_PTR, CK_ULONG_PTR) callconv(.C) CK_RV;
-pub const CK_C_EncryptUpdate = ?*const fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG, CK_BYTE_PTR, CK_ULONG_PTR) callconv(.C) CK_RV;
-pub const CK_C_EncryptFinal = ?*const fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG_PTR) callconv(.C) CK_RV;
-pub const CK_C_DecryptInit = ?*const fn (CK_SESSION_HANDLE, CK_MECHANISM_PTR, CK_OBJECT_HANDLE) callconv(.C) CK_RV;
-pub const CK_C_Decrypt = ?*const fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG, CK_BYTE_PTR, CK_ULONG_PTR) callconv(.C) CK_RV;
-pub const CK_C_DecryptUpdate = ?*const fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG, CK_BYTE_PTR, CK_ULONG_PTR) callconv(.C) CK_RV;
-pub const CK_C_DecryptFinal = ?*const fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG_PTR) callconv(.C) CK_RV;
-pub const CK_C_DigestInit = ?*const fn (CK_SESSION_HANDLE, CK_MECHANISM_PTR) callconv(.C) CK_RV;
-pub const CK_C_Digest = ?*const fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG, CK_BYTE_PTR, CK_ULONG_PTR) callconv(.C) CK_RV;
-pub const CK_C_DigestUpdate = ?*const fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG) callconv(.C) CK_RV;
-pub const CK_C_DigestKey = ?*const fn (CK_SESSION_HANDLE, CK_OBJECT_HANDLE) callconv(.C) CK_RV;
-pub const CK_C_DigestFinal = ?*const fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG_PTR) callconv(.C) CK_RV;
-pub const CK_C_SignInit = ?*const fn (CK_SESSION_HANDLE, CK_MECHANISM_PTR, CK_OBJECT_HANDLE) callconv(.C) CK_RV;
-pub const CK_C_Sign = ?*const fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG, CK_BYTE_PTR, CK_ULONG_PTR) callconv(.C) CK_RV;
-pub const CK_C_SignUpdate = ?*const fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG) callconv(.C) CK_RV;
-pub const CK_C_SignFinal = ?*const fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG_PTR) callconv(.C) CK_RV;
-pub const CK_C_SignRecoverInit = ?*const fn (CK_SESSION_HANDLE, CK_MECHANISM_PTR, CK_OBJECT_HANDLE) callconv(.C) CK_RV;
-pub const CK_C_SignRecover = ?*const fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG, CK_BYTE_PTR, CK_ULONG_PTR) callconv(.C) CK_RV;
-pub const CK_C_VerifyInit = ?*const fn (CK_SESSION_HANDLE, CK_MECHANISM_PTR, CK_OBJECT_HANDLE) callconv(.C) CK_RV;
-pub const CK_C_Verify = ?*const fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG, CK_BYTE_PTR, CK_ULONG) callconv(.C) CK_RV;
-pub const CK_C_VerifyUpdate = ?*const fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG) callconv(.C) CK_RV;
-pub const CK_C_VerifyFinal = ?*const fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG) callconv(.C) CK_RV;
-pub const CK_C_VerifyRecoverInit = ?*const fn (CK_SESSION_HANDLE, CK_MECHANISM_PTR, CK_OBJECT_HANDLE) callconv(.C) CK_RV;
-pub const CK_C_VerifyRecover = ?*const fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG, CK_BYTE_PTR, CK_ULONG_PTR) callconv(.C) CK_RV;
-pub const CK_C_DigestEncryptUpdate = ?*const fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG, CK_BYTE_PTR, CK_ULONG_PTR) callconv(.C) CK_RV;
-pub const CK_C_DecryptDigestUpdate = ?*const fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG, CK_BYTE_PTR, CK_ULONG_PTR) callconv(.C) CK_RV;
-pub const CK_C_SignEncryptUpdate = ?*const fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG, CK_BYTE_PTR, CK_ULONG_PTR) callconv(.C) CK_RV;
-pub const CK_C_DecryptVerifyUpdate = ?*const fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG, CK_BYTE_PTR, CK_ULONG_PTR) callconv(.C) CK_RV;
-pub const CK_C_GenerateKey = ?*const fn (CK_SESSION_HANDLE, CK_MECHANISM_PTR, CK_ATTRIBUTE_PTR, CK_ULONG, CK_OBJECT_HANDLE_PTR) callconv(.C) CK_RV;
-pub const CK_C_GenerateKeyPair = ?*const fn (CK_SESSION_HANDLE, CK_MECHANISM_PTR, CK_ATTRIBUTE_PTR, CK_ULONG, CK_ATTRIBUTE_PTR, CK_ULONG, CK_OBJECT_HANDLE_PTR, CK_OBJECT_HANDLE_PTR) callconv(.C) CK_RV;
-pub const CK_C_WrapKey = ?*const fn (CK_SESSION_HANDLE, CK_MECHANISM_PTR, CK_OBJECT_HANDLE, CK_OBJECT_HANDLE, CK_BYTE_PTR, CK_ULONG_PTR) callconv(.C) CK_RV;
-pub const CK_C_UnwrapKey = ?*const fn (CK_SESSION_HANDLE, CK_MECHANISM_PTR, CK_OBJECT_HANDLE, CK_BYTE_PTR, CK_ULONG, CK_ATTRIBUTE_PTR, CK_ULONG, CK_OBJECT_HANDLE_PTR) callconv(.C) CK_RV;
-pub const CK_C_DeriveKey = ?*const fn (CK_SESSION_HANDLE, CK_MECHANISM_PTR, CK_OBJECT_HANDLE, CK_ATTRIBUTE_PTR, CK_ULONG, CK_OBJECT_HANDLE_PTR) callconv(.C) CK_RV;
-pub const CK_C_SeedRandom = ?*const fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG) callconv(.C) CK_RV;
+pub const CK_C_GetObjectSize = switch (zig_backend) {
+    .stage1 => ?fn (CK_SESSION_HANDLE, CK_OBJECT_HANDLE, CK_ULONG_PTR) callconv(.C) CK_RV,
+    else => ?*const fn (CK_SESSION_HANDLE, CK_OBJECT_HANDLE, CK_ULONG_PTR) callconv(.C) CK_RV,
+};
+pub const CK_C_GetAttributeValue = switch (zig_backend) {
+    .stage1 => ?fn (CK_SESSION_HANDLE, CK_OBJECT_HANDLE, CK_ATTRIBUTE_PTR, CK_ULONG) callconv(.C) CK_RV,
+    else => ?*const fn (CK_SESSION_HANDLE, CK_OBJECT_HANDLE, CK_ATTRIBUTE_PTR, CK_ULONG) callconv(.C) CK_RV,
+};
+pub const CK_C_SetAttributeValue = switch (zig_backend) {
+    .stage1 => ?fn (CK_SESSION_HANDLE, CK_OBJECT_HANDLE, CK_ATTRIBUTE_PTR, CK_ULONG) callconv(.C) CK_RV,
+    else => ?*const fn (CK_SESSION_HANDLE, CK_OBJECT_HANDLE, CK_ATTRIBUTE_PTR, CK_ULONG) callconv(.C) CK_RV,
+};
+pub const CK_C_FindObjectsInit = switch (zig_backend) {
+    .stage1 => ?fn (CK_SESSION_HANDLE, CK_ATTRIBUTE_PTR, CK_ULONG) callconv(.C) CK_RV,
+    else => ?*const fn (CK_SESSION_HANDLE, CK_ATTRIBUTE_PTR, CK_ULONG) callconv(.C) CK_RV,
+};
+pub const CK_C_FindObjects = switch (zig_backend) {
+    .stage1 => ?fn (CK_SESSION_HANDLE, CK_OBJECT_HANDLE_PTR, CK_ULONG, CK_ULONG_PTR) callconv(.C) CK_RV,
+    else => ?*const fn (CK_SESSION_HANDLE, CK_OBJECT_HANDLE_PTR, CK_ULONG, CK_ULONG_PTR) callconv(.C) CK_RV,
+};
+pub const CK_C_FindObjectsFinal = switch (zig_backend) {
+    .stage1 => ?fn (CK_SESSION_HANDLE) callconv(.C) CK_RV,
+    else => ?*const fn (CK_SESSION_HANDLE) callconv(.C) CK_RV,
+};
+pub const CK_C_EncryptInit = switch (zig_backend) {
+    .stage1 => ?fn (CK_SESSION_HANDLE, CK_MECHANISM_PTR, CK_OBJECT_HANDLE) callconv(.C) CK_RV,
+    else => ?*const fn (CK_SESSION_HANDLE, CK_MECHANISM_PTR, CK_OBJECT_HANDLE) callconv(.C) CK_RV,
+};
+pub const CK_C_Encrypt = switch (zig_backend) {
+    .stage1 => ?fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG, CK_BYTE_PTR, CK_ULONG_PTR) callconv(.C) CK_RV,
+    else => ?*const fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG, CK_BYTE_PTR, CK_ULONG_PTR) callconv(.C) CK_RV,
+};
+pub const CK_C_EncryptUpdate = switch (zig_backend) {
+    .stage1 => ?fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG, CK_BYTE_PTR, CK_ULONG_PTR) callconv(.C) CK_RV,
+    else => ?*const fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG, CK_BYTE_PTR, CK_ULONG_PTR) callconv(.C) CK_RV,
+};
+pub const CK_C_EncryptFinal = switch (zig_backend) {
+    .stage1 => ?fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG_PTR) callconv(.C) CK_RV,
+    else => ?*const fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG_PTR) callconv(.C) CK_RV,
+};
+pub const CK_C_DecryptInit = switch (zig_backend) {
+    .stage1 => ?fn (CK_SESSION_HANDLE, CK_MECHANISM_PTR, CK_OBJECT_HANDLE) callconv(.C) CK_RV,
+    else => ?*const fn (CK_SESSION_HANDLE, CK_MECHANISM_PTR, CK_OBJECT_HANDLE) callconv(.C) CK_RV,
+};
+pub const CK_C_Decrypt = switch (zig_backend) {
+    .stage1 => ?fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG, CK_BYTE_PTR, CK_ULONG_PTR) callconv(.C) CK_RV,
+    else => ?*const fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG, CK_BYTE_PTR, CK_ULONG_PTR) callconv(.C) CK_RV,
+};
+pub const CK_C_DecryptUpdate = switch (zig_backend) {
+    .stage1 => ?fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG, CK_BYTE_PTR, CK_ULONG_PTR) callconv(.C) CK_RV,
+    else => ?*const fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG, CK_BYTE_PTR, CK_ULONG_PTR) callconv(.C) CK_RV,
+};
+pub const CK_C_DecryptFinal = switch (zig_backend) {
+    .stage1 => ?fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG_PTR) callconv(.C) CK_RV,
+    else => ?*const fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG_PTR) callconv(.C) CK_RV,
+};
+pub const CK_C_DigestInit = switch (zig_backend) {
+    .stage1 => ?fn (CK_SESSION_HANDLE, CK_MECHANISM_PTR) callconv(.C) CK_RV,
+    else => ?*const fn (CK_SESSION_HANDLE, CK_MECHANISM_PTR) callconv(.C) CK_RV,
+};
+pub const CK_C_Digest = switch (zig_backend) {
+    .stage1 => ?fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG, CK_BYTE_PTR, CK_ULONG_PTR) callconv(.C) CK_RV,
+    else => ?*const fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG, CK_BYTE_PTR, CK_ULONG_PTR) callconv(.C) CK_RV,
+};
+pub const CK_C_DigestUpdate = switch (zig_backend) {
+    .stage1 => ?fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG) callconv(.C) CK_RV,
+    else => ?*const fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG) callconv(.C) CK_RV,
+};
+pub const CK_C_DigestKey = switch (zig_backend) {
+    .stage1 => ?fn (CK_SESSION_HANDLE, CK_OBJECT_HANDLE) callconv(.C) CK_RV,
+    else => ?*const fn (CK_SESSION_HANDLE, CK_OBJECT_HANDLE) callconv(.C) CK_RV,
+};
+pub const CK_C_DigestFinal = switch (zig_backend) {
+    .stage1 => ?fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG_PTR) callconv(.C) CK_RV,
+    else => ?*const fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG_PTR) callconv(.C) CK_RV,
+};
+pub const CK_C_SignInit = switch (zig_backend) {
+    .stage1 => ?fn (CK_SESSION_HANDLE, CK_MECHANISM_PTR, CK_OBJECT_HANDLE) callconv(.C) CK_RV,
+    else => ?*const fn (CK_SESSION_HANDLE, CK_MECHANISM_PTR, CK_OBJECT_HANDLE) callconv(.C) CK_RV,
+};
+pub const CK_C_Sign = switch (zig_backend) {
+    .stage1 => ?fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG, CK_BYTE_PTR, CK_ULONG_PTR) callconv(.C) CK_RV,
+    else => ?*const fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG, CK_BYTE_PTR, CK_ULONG_PTR) callconv(.C) CK_RV,
+};
+pub const CK_C_SignUpdate = switch (zig_backend) {
+    .stage1 => ?fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG) callconv(.C) CK_RV,
+    else => ?*const fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG) callconv(.C) CK_RV,
+};
+pub const CK_C_SignFinal = switch (zig_backend) {
+    .stage1 => ?fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG_PTR) callconv(.C) CK_RV,
+    else => ?*const fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG_PTR) callconv(.C) CK_RV,
+};
+pub const CK_C_SignRecoverInit = switch (zig_backend) {
+    .stage1 => ?fn (CK_SESSION_HANDLE, CK_MECHANISM_PTR, CK_OBJECT_HANDLE) callconv(.C) CK_RV,
+    else => ?*const fn (CK_SESSION_HANDLE, CK_MECHANISM_PTR, CK_OBJECT_HANDLE) callconv(.C) CK_RV,
+};
+pub const CK_C_SignRecover = switch (zig_backend) {
+    .stage1 => ?fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG, CK_BYTE_PTR, CK_ULONG_PTR) callconv(.C) CK_RV,
+    else => ?*const fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG, CK_BYTE_PTR, CK_ULONG_PTR) callconv(.C) CK_RV,
+};
+pub const CK_C_VerifyInit = switch (zig_backend) {
+    .stage1 => ?fn (CK_SESSION_HANDLE, CK_MECHANISM_PTR, CK_OBJECT_HANDLE) callconv(.C) CK_RV,
+    else => ?*const fn (CK_SESSION_HANDLE, CK_MECHANISM_PTR, CK_OBJECT_HANDLE) callconv(.C) CK_RV,
+};
+pub const CK_C_Verify = switch (zig_backend) {
+    .stage1 => ?fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG, CK_BYTE_PTR, CK_ULONG) callconv(.C) CK_RV,
+    else => ?*const fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG, CK_BYTE_PTR, CK_ULONG) callconv(.C) CK_RV,
+};
+pub const CK_C_VerifyUpdate = switch (zig_backend) {
+    .stage1 => ?fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG) callconv(.C) CK_RV,
+    else => ?*const fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG) callconv(.C) CK_RV,
+};
+pub const CK_C_VerifyFinal = switch (zig_backend) {
+    .stage1 => ?fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG) callconv(.C) CK_RV,
+    else => ?*const fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG) callconv(.C) CK_RV,
+};
+pub const CK_C_VerifyRecoverInit = switch (zig_backend) {
+    .stage1 => ?fn (CK_SESSION_HANDLE, CK_MECHANISM_PTR, CK_OBJECT_HANDLE) callconv(.C) CK_RV,
+    else => ?*const fn (CK_SESSION_HANDLE, CK_MECHANISM_PTR, CK_OBJECT_HANDLE) callconv(.C) CK_RV,
+};
+pub const CK_C_VerifyRecover = switch (zig_backend) {
+    .stage1 => ?fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG, CK_BYTE_PTR, CK_ULONG_PTR) callconv(.C) CK_RV,
+    else => ?*const fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG, CK_BYTE_PTR, CK_ULONG_PTR) callconv(.C) CK_RV,
+};
+pub const CK_C_DigestEncryptUpdate = switch (zig_backend) {
+    .stage1 => ?fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG, CK_BYTE_PTR, CK_ULONG_PTR) callconv(.C) CK_RV,
+    else => ?*const fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG, CK_BYTE_PTR, CK_ULONG_PTR) callconv(.C) CK_RV,
+};
+pub const CK_C_DecryptDigestUpdate = switch (zig_backend) {
+    .stage1 => ?fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG, CK_BYTE_PTR, CK_ULONG_PTR) callconv(.C) CK_RV,
+    else => ?*const fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG, CK_BYTE_PTR, CK_ULONG_PTR) callconv(.C) CK_RV,
+};
+pub const CK_C_SignEncryptUpdate = switch (zig_backend) {
+    .stage1 => ?fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG, CK_BYTE_PTR, CK_ULONG_PTR) callconv(.C) CK_RV,
+    else => ?*const fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG, CK_BYTE_PTR, CK_ULONG_PTR) callconv(.C) CK_RV,
+};
+pub const CK_C_DecryptVerifyUpdate = switch (zig_backend) {
+    .stage1 => ?fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG, CK_BYTE_PTR, CK_ULONG_PTR) callconv(.C) CK_RV,
+    else => ?*const fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG, CK_BYTE_PTR, CK_ULONG_PTR) callconv(.C) CK_RV,
+};
+pub const CK_C_GenerateKey = switch (zig_backend) {
+    .stage1 => ?fn (CK_SESSION_HANDLE, CK_MECHANISM_PTR, CK_ATTRIBUTE_PTR, CK_ULONG, CK_OBJECT_HANDLE_PTR) callconv(.C) CK_RV,
+    else => ?*const fn (CK_SESSION_HANDLE, CK_MECHANISM_PTR, CK_ATTRIBUTE_PTR, CK_ULONG, CK_OBJECT_HANDLE_PTR) callconv(.C) CK_RV,
+};
+pub const CK_C_GenerateKeyPair = switch (zig_backend) {
+    .stage1 => ?fn (CK_SESSION_HANDLE, CK_MECHANISM_PTR, CK_ATTRIBUTE_PTR, CK_ULONG, CK_ATTRIBUTE_PTR, CK_ULONG, CK_OBJECT_HANDLE_PTR, CK_OBJECT_HANDLE_PTR) callconv(.C) CK_RV,
+    else => ?*const fn (CK_SESSION_HANDLE, CK_MECHANISM_PTR, CK_ATTRIBUTE_PTR, CK_ULONG, CK_ATTRIBUTE_PTR, CK_ULONG, CK_OBJECT_HANDLE_PTR, CK_OBJECT_HANDLE_PTR) callconv(.C) CK_RV,
+};
+pub const CK_C_WrapKey = switch (zig_backend) {
+    .stage1 => ?fn (CK_SESSION_HANDLE, CK_MECHANISM_PTR, CK_OBJECT_HANDLE, CK_OBJECT_HANDLE, CK_BYTE_PTR, CK_ULONG_PTR) callconv(.C) CK_RV,
+    else => ?*const fn (CK_SESSION_HANDLE, CK_MECHANISM_PTR, CK_OBJECT_HANDLE, CK_OBJECT_HANDLE, CK_BYTE_PTR, CK_ULONG_PTR) callconv(.C) CK_RV,
+};
+pub const CK_C_UnwrapKey = switch (zig_backend) {
+    .stage1 => ?fn (CK_SESSION_HANDLE, CK_MECHANISM_PTR, CK_OBJECT_HANDLE, CK_BYTE_PTR, CK_ULONG, CK_ATTRIBUTE_PTR, CK_ULONG, CK_OBJECT_HANDLE_PTR) callconv(.C) CK_RV,
+    else => ?*const fn (CK_SESSION_HANDLE, CK_MECHANISM_PTR, CK_OBJECT_HANDLE, CK_BYTE_PTR, CK_ULONG, CK_ATTRIBUTE_PTR, CK_ULONG, CK_OBJECT_HANDLE_PTR) callconv(.C) CK_RV,
+};
+pub const CK_C_DeriveKey = switch (zig_backend) {
+    .stage1 => ?fn (CK_SESSION_HANDLE, CK_MECHANISM_PTR, CK_OBJECT_HANDLE, CK_ATTRIBUTE_PTR, CK_ULONG, CK_OBJECT_HANDLE_PTR) callconv(.C) CK_RV,
+    else => ?*const fn (CK_SESSION_HANDLE, CK_MECHANISM_PTR, CK_OBJECT_HANDLE, CK_ATTRIBUTE_PTR, CK_ULONG, CK_OBJECT_HANDLE_PTR) callconv(.C) CK_RV,
+};
+pub const CK_C_SeedRandom = switch (zig_backend) {
+    .stage1 => ?fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG) callconv(.C) CK_RV,
+    else => ?*const fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG) callconv(.C) CK_RV,
+};
 pub const CK_C_GenerateRandom = switch (zig_backend) {
     .stage1 => ?fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG) callconv(.C) CK_RV,
     else => ?*const fn (CK_SESSION_HANDLE, CK_BYTE_PTR, CK_ULONG) callconv(.C) CK_RV,
