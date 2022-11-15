@@ -5,7 +5,7 @@ const dyn = std.DynLib;
 const log = std.log;
 const testing = std.testing;
 
-pub fn getLibP11Path() [*:0]const u8 {
+fn getLibP11Path() [*:0]const u8 {
     return "/usr/lib/softhsm/libsofthsm2.so";
 }
 
@@ -96,7 +96,7 @@ pub export fn Finalize(ctx: *pkcs11.Context) callconv(.C) ?*pkcs11.Context {
 }
 
 test "Detecting default libSoftHSM 2" {
-    const ctx = New("");
+    const ctx = New("rbuild_lib/libsofthsm2.so");
     _ = ctx;
 }
 

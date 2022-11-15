@@ -22,7 +22,6 @@ jobs:
             mkdir -p $HOME/lib/softhsm/tokens && echo "directories.tokendir = $HOME/lib/softhsm/tokens" > $HOME/lib/softhsm/softhsm2.conf
             sudo chown -R $USER:$USER $HOME/lib/softhsm
             export SOFTHSM2_CONF=$HOME/lib/softhsm/softhsm2.conf
-            sudo cp rbuild_lib/libsofthsm2.* /usr/lib/softhsm
             softhsm2-util --init-token --slot 0 --label "Test" --so-pin "1122334455" --pin "1122334455" --serial `shuf -i 0-9999 -n1`
 
       - name: build
